@@ -2,13 +2,13 @@ package main
 
 import (
 	"fmt"
+	"github.com/gofiber/fiber/v2"
 	"log"
 	"net/http"
 	"os"
 	"postgoflt/models"
 	"postgoflt/storage"
 
-	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 	"gorm.io/gorm"
 )
