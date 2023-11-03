@@ -1,0 +1,1267 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Arazi Elektronik Değerleme Raporu Pro</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.2.0/dist/chartjs-plugin-datalabels.min.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-colorschemes"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+            integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+            crossorigin=""></script>
+    <style>
+        @font-face {
+            font-family: 'proxima_novaregular';
+            src: url('https://www.endeksa.com/assets/fonts/proximanova-regular-webfont.eot');
+            src: url('https://www.endeksa.com/assets/fonts/proximanova-regular-webfont.eot?#iefix') format('embedded-opentype'),
+            url('https://www.endeksa.com/assets/fonts/proximanova-regular-webfont.woff2') format('woff2'),
+            url('https://www.endeksa.com/assets/fonts/proximanova-regular-webfont.woff') format('woff'),
+            url('https://www.endeksa.com/assets/fonts/proximanova-regular-webfont.ttf') format('truetype'),
+            url('https://www.endeksa.com/assets/fonts/proximanova-regular-webfont.svg#proxima_novaregular') format('svg');
+            font-weight: normal;
+            font-style: normal;
+
+        }
+
+        .land-compare-wrapper>table {
+            margin-top: -10px;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0
+        }
+
+        tr:last-child td:first-child {
+            border-bottom-left-radius: 10px;
+        }
+
+        tr:last-child td:last-child {
+            border-bottom-right-radius: 10px;
+        }
+
+
+        .emsaller>tbody>tr td {
+            text-align: center !important;
+        }
+
+        .emsaller>tbody>tr:last-child td:last-child {
+            border-bottom-right-radius: 0px !important;
+            text-align: center !important;
+        }
+
+        .emsaller>tbody>tr:last-child td:first-child {
+            border-bottom-left-radius: 0px !important;
+            text-align: center !important;
+        }
+
+        .parsel {
+            margin-top: -10px;
+        }
+
+        .parsel>tbody>tr td {
+            text-align: center !important;
+        }
+
+        .parsel>tbody>tr:last-child td:last-child {
+            border-bottom-right-radius: 0px !important;
+            text-align: center !important;
+        }
+
+        .parsel>tbody>tr:last-child td:first-child {
+            border-bottom-left-radius: 0px !important;
+            text-align: center !important;
+        }
+
+        * {
+            font-family: 'proxima_novaregular', Arial, sans-serif;
+            font-weight: 400;
+        }
+
+        body {
+            margin: 10px;
+            font-size: 16px;
+        }
+
+        .navbar-brand {
+            background: url(https://cdn.endeksa.com/img/logo/logo_cmyk2.svg) no-repeat center center;
+            -ms-background-size: 100%;
+            background-size: 100%;
+            display: block;
+            border-radius: 0;
+            text-align: center;
+            height: 80px;
+            margin-left: 20px !important;
+            width: 232px;
+        }
+
+        .navbar-slogan {
+            font-family: 'proxima_novaextrabold', Arial, sans-serif;
+            margin-right: 20px !important;
+            color: black;
+            font-weight: bold;
+        }
+
+        .navbar-endeksa {
+            font-family: 'proxima_novaextrabold', Arial, sans-serif;
+            /* background: #ff004f; */
+            color: black;
+        }
+
+        .section-title {
+            font-family: 'proxima_novaextrabold', Arial, sans-serif;
+            padding: 7px;
+            background-color: #ff004f;
+            border-color: #080808;
+            color: white;
+            font-size: 17px;
+            text-transform: uppercase;
+            text-align: center;
+            margin-left: 15px;
+            margin-right: 15px;
+            margin-bottom: 0px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+
+        .section-endline {
+            padding: 7px;
+            /* background-color: #222;
+            border-color: #080808; */
+            color: black;
+        }
+
+        .gradient-bar {
+            position: relative;
+            background: linear-gradient(90deg, #4CAF50, #fbce0a, #e91e1e);
+        }
+
+        /* .gradient-bar::after {
+            position: absolute;
+            content: "";
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 20px solid #fbce0a;
+            bottom: -60px;
+            right: 0;
+            left: 0;
+            top: 0;
+            margin: auto;
+        } */
+
+        .bold,
+        strong {
+            font-family: 'proxima_novaextrabold', Arial, sans-serif;
+        }
+
+        .fw-bold {
+            font-weight: bold;
+        }
+
+        td {
+            font-size: 14px;
+            margin: 0;
+            padding: 3px;
+            text-align: left;
+            border-top: none !important;
+            border: 1px solid #ff004f;
+        }
+
+        .table-condensed>tbody>tr>td,
+        .table-condensed>tbody>tr>th,
+        .table-condensed>tfoot>tr>td,
+        .table-condensed>tfoot>tr>th,
+        .table-condensed>thead>tr>td,
+        .table-condensed>thead>tr>th {
+            padding: 3px !important;
+            padding-left: 15px !important;
+        }
+
+        .info-tile {
+            border: 2px solid #EEE;
+            border-radius: 1px;
+            display: block;
+            font-size: 22px;
+            margin: 0 0 16px;
+            overflow: hidden;
+            padding: 16px;
+            position: relative;
+            background: white;
+        }
+
+        .rapor-header {
+            /*height: 1500px;*/
+            /*background: linear-gradient(to bottom right, #ff0050, rgb(233, 30, 99));*/
+            color: black;
+            position: relative;
+            padding-bottom: 50px;
+            margin-left: -60px;
+            margin-right: -60px;
+        }
+
+        .rapor-logo-wrapper {
+            padding: 200px 100px 100px 100px;
+        }
+
+        .rapor-logo {
+            width: 190px;
+        }
+
+        .firma-logo {
+            max-width: 190px;
+            max-height: 200px;
+        }
+
+        .firma-logo-mini {
+            max-width: 120px;
+            max-height: 120px;
+            border-radius: 10px;
+            border-color: transparent;
+        }
+
+        .rapor-bilgi {
+            padding: 100px 100px 100px 100px;
+        }
+
+        .rapor-bilgi h1 {
+            font-size: 80px;
+        }
+
+        .qrcode {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        #eksper-yorumu {
+            background: white;
+            position: relative;
+            text-align: justify;
+            padding: 3px;
+        }
+
+        .rapor-avatar {
+            max-width: 140px;
+            vertical-align: middle;
+        }
+
+        .deger-section {
+            /*padding: 3px;*/
+            margin-bottom: 7px;
+            margin-right: 0 !important;
+            /*position: relative;*/
+            text-align: justify;
+        }
+
+        .bg-white {
+            background: white;
+        }
+
+        .avatar-100 {
+            width: 100px;
+        }
+
+        .avatar {
+            position: relative;
+            display: inline-block;
+            /*width: 40px;*/
+            white-space: nowrap;
+            vertical-align: bottom;
+            border-radius: 1000px;
+        }
+
+        .avatar img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border: 0 none;
+            border-radius: 1000px;
+        }
+
+        .chart-header {
+            font-size: 17px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .user-detail .img-wrapper {
+            float: left;
+            margin-bottom: 10px;
+            margin-right: 20px;
+        }
+
+        .user-detail .img-wrapper img {
+            height: 110px;
+            overflow: hidden;
+            max-width: 200px;
+        }
+
+        .user-detail .user-wrapper {
+            float: left;
+            width: 50%;
+        }
+
+        .user-image {
+            padding: 0;
+            margin: 0;
+        }
+
+        .user-image img {
+            height: auto;
+            max-height: 140px;
+            width: auto;
+            max-width: 160px;
+        }
+
+        .user-detail .user-wrapper .user-name {
+            font-weight: bold;
+            margin-bottom: 0;
+            padding-bottom: 0;
+            font-size: 22px;
+        }
+
+        .user-detail .user-wrapper .user-telephone {
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .report-detail .report-detail-wrapper {
+            float: left;
+            width: 75%;
+            padding-right: 15px;
+            text-align: right;
+            overflow: hidden;
+        }
+
+        .report-detail .report-detail-wrapper .report-address {
+            text-align: right;
+            float: right;
+            white-space: normal;
+        }
+
+        .report-detail img {
+            width: 25%;
+            float: right;
+        }
+
+        .market-compare table {
+            border: 1px solid #ddd;
+            border-bottom: none;
+            background-color: #fff;
+        }
+
+        .market-compare h4 {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .market-compare tbody tr:nth-of-type(1) th {
+            text-align: center;
+            font-size: 22px;
+        }
+
+        .market-compare tbody tr:nth-of-type(1) th:first-child {
+            text-align: left;
+        }
+
+        .market-compare tbody tr:nth-of-type(1) th:last-child {
+            text-align: right;
+        }
+
+        .market-compare tbody tr td {
+            text-align: center;
+            font-size: 15px;
+        }
+
+
+
+        .market-compare tbody tr td:first-child {
+            text-align: left;
+            margin-left: 5px;
+        }
+
+        .market-compare tbody tr td:last-child {
+            text-align: right;
+            margin-right: 5px;
+        }
+
+        .market-compare tbody tr:last-child {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .map-wrapper {
+            overflow: hidden;
+            width: 100%;
+            height: auto;
+            margin-top: -20px;
+            margin-bottom: 20px;
+        }
+
+        #mapComparable {
+            width: 100%;
+            height: 400px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .land-info-wrapper h4 {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .land-info {
+            margin: 0 auto;
+            display: table;
+            background-color: #ddd;
+            list-style: none;
+            width: calc(100% - 30px);
+            margin-bottom: 10px;
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+
+        .land-info li {
+            display: table-cell;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px 0 8px;
+        }
+
+        .land-info li:first-child {
+            padding-left: 15px;
+            text-align: left;
+        }
+
+        .land-info li:nth-child(2) {
+            text-align: left;
+        }
+
+        .land-info li:last-child {
+            padding-right: 15px;
+            text-align: right;
+        }
+
+        .land-info li span {
+            font-weight: normal;
+        }
+
+        #mapLand {
+            width: 100%;
+            height: 425px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .row {
+            margin-right: 0;
+            margin-left: 0;
+            margin-top: 20px;
+        }
+
+        h1 {
+            font-size: 28px;
+        }
+
+        /*
+        @page {
+            size: 210mm 297mm;
+        }*/
+
+        .my-container {
+            width: 1240px;
+            /* height: 1754px; */
+            /* border: 2px dotted fuchsia; */
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        p.avatar-text {
+            margin-top: 0px;
+            margin-bottom: 0px;
+            font-size: 22px;
+        }
+    </style>
+</head>
+
+<body>
+<div style="page-break-inside: avoid;">
+    <div class="my-container">
+        <div style="width: 400px; margin-top: 40px; margin-right: auto; margin-left: auto;">
+            <img onerror="this.style.display='none'" src="https://cdn.endeksa.com/img/logo/logo_cmyk2.svg" width="100%" height="200" />
+        </div>
+        <div class="bold"
+             style="width: 80%; font-size:68px; font-weight: bold; margin-top: 120px; margin-left: auto; margin-right: auto; text-align: center;line-height: 110%;">
+            ARAZİ ELEKTRONİK DEĞERLEME RAPORU
+        </div>
+        <div style="width: 86%; margin-top: 150px; margin-left: auto; margin-right: auto;">
+            <div style="width: 350px; float: right;">
+                <div style="width: 100%; margin-left: auto; margin-left: auto; text-align: center;">
+                    <img onerror="this.style.display='none'" src="https://endeksa-beta-storage.s3.eu-central-1.amazonaws.com/data/6ac9d4d1-5dca-4c8e-9a7c-9556ee9641b0/8a0f2668-de1e-4c74-b3bb-0072b2053a1e_logo.jpeg" height="48" width="auto" style="max-height:48px" />
+                </div>
+                <div style="width: 100%;">
+                    <p style="font-size: 26px; margin-top: 16px; margin-bottom: 0px; text-align: center;">
+                        <strong>Some Company With Long Name</strong>
+                    </p>
+                    <p style="font-size: 22px; margin-top: 0px; text-align: center;">Personalized Solutions, Exceptional Properties</p>
+                </div>
+            </div>
+            <div style="width: 570px; float: right;">
+                <p class="avatar-text" style="font-size: 35px;"><strong>Onur Yanık</strong></p>
+                <p class="avatar-text" style="font-size: 20px; line-height: 110%; padding-right:50">Bu rapor
+                    gayrimenkul
+                    danışmanınızın talebi üzerine üretilmiştir.</p>
+            </div>
+            <div style="width: 128px;height:128px;">
+                <img onerror="this.style.display='none'" style="margin-left: 0; border-radius: 50%; border-color: transparent; max-width: 128px; max-height: 120px;min-height:128px;"
+                     src="{{Avatar}}" />
+            </div>
+        </div>
+        <div style="width: 800px; margin-left:100px; margin-top:70px">
+            <p class="avatar-text" style="margin-top: 10px; font-size: 22px; line-height: 110%;"><strong>Adres:
+            </strong>Beste Sok., 18, Şirintepe Mah., İzmit, Kocaeli</p>
+            <p class="avatar-text" style="font-size: 22px; line-height: 110%;"><span class="tapuParsel"></span></p>
+            <p class="avatar-text"
+               style="font-size: 22px; line-height: 110%; margin-top:30px; margin-bottom:-20px;"><strong>Rapor
+                Tarihi:
+            </strong>17.08.2023</p>
+        </div>
+        <div style="width: 100%; margin-top: 70px;">
+            <img onerror="this.style.display='none'" style="z-index: 0;" src="https://endeksa-storage.s3.eu-central-1.amazonaws.com/images/edr.png" />
+        </div>
+        <div style="width: 90%; margin-top: 30px; margin-left: auto; margin-right: auto;">
+            <div style="width: 128px; height: 128px; float: left;">
+                <img onerror="this.style.display='none'" src="{{qrcode}}" alt="qr-code" width="116" height="116" />
+            </div>
+            <div style="width: auto;">
+                <p style="font-size: 17px; padding-top: 12px; line-height: 110%;">
+                    Bu rapor, www.endeksa.com tarafından satış, saha çalışmaları ve internette yer alan verilere dayalı istatistiksel modelleme yöntemleri ile üretilmiştir ve sapmalar içerebilir. Burada yer alan bilgiler ve tahminler, varsayımsal olup herhangi bir taahhüt veya kesinlik içermez. Bu kapsamda buradaki bilgiler ve tahminler, müşteri için sadece tavsiye niteliğinde olup öngörü amaçlıdır; herhangi bir şekilde www.endeksa.com veya müşteriler için hukuki bağlayıcılığı olamaz. Bu bilgi ve tahminlerin bir yatırıma veya ticarete konu edilmesi halinde www.endeksa.com herhangi bir sorumluluk üstlenmez.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="page-break-inside: avoid;">
+    <div style="height: 20px;"></div>
+    <div class="row" style="clear:both;">
+        <div class="col-xs-4 text-left">
+            <a class="navbar-brand" href="#"></a>
+        </div>
+        <div class="col-xs-4 text-center" style="padding-top: 20px;">
+            <img onerror="this.style.display='none'" src="https://endeksa-beta-storage.s3.eu-central-1.amazonaws.com/data/6ac9d4d1-5dca-4c8e-9a7c-9556ee9641b0/8a0f2668-de1e-4c74-b3bb-0072b2053a1e_logo.jpeg" height="48" width="auto" style="max-height:48px" />
+        </div>
+        <div class="col-xs-4 text-right">
+            <h1 class="navbar-slogan" style="margin-right: auto !important; margin-left: auto; text-align: right;">
+                ARAZİ ELEKTRONİK DEĞERLEME RAPORU
+            </h1>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-xs-5">
+            <div class="col-xs-3">
+                <img onerror="this.style.display='none'" style="margin-left: 0; border-radius: 50%; border-color: transparent; max-width: 128px; max-height: 120px;min-height:128px;"
+                     src="{{Avatar}}" />
+            </div>
+            <div class="col-xs-9 text-left" style="padding-left: 30px; font-size: 20px;">
+                <p class="user-name" style="font-size: 20px;"><strong>Onur Yanık</strong></p>
+                <p class="user-telephone" style="margin-bottom: 5px;">
+                    <img onerror="this.style.display='none'" src="https://endeksa-beta-storage.s3.eu-central-1.amazonaws.com/htmltemplates/reports/EDR/phone.png"
+                         style="margin-top: -5px;" alt="phone" width="22" height="22"> &nbsp;+905303218044
+                </p>
+                <p>
+                    <img onerror="this.style.display='none'" src="https://endeksa-beta-storage.s3.eu-central-1.amazonaws.com/htmltemplates/reports/EDR/mail.png"
+                         style="margin-top: -5px; margin-right:5px" alt="mail" width="22" height="22">&nbsp;onury@endeksa.com
+                </p>
+            </div>
+        </div>
+        <div class="col-xs-2 text-right">
+            <p style="margin-bottom: 6px; font-size: 20px; text-align: center;">
+                <strong>Personalized Solutions, Exceptional Properties</strong>
+            </p>
+        </div>
+        <div class="col-xs-5" style="padding-right:40px">
+            <div class="col-xs-10 text-right" style="font-size: 15px; padding-right:10px">
+                <p style="margin-bottom: 3px;"></p>
+                <p style="margin-bottom: 2px;" class="report-address">
+                    Beste Sok., 18, Şirintepe Mah., İzmit, Kocaeli
+                </p>
+                <span class="tapuParsel"></span>
+                <p
+                        style="margin-bottom: 2px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; clear: both;">
+                    17.08.2023
+                </p>
+            </div>
+            <div class="col-xs-2 text-left">
+                <img onerror="this.style.display='none'" src="{{qrcode}}" width="82" height="82" alt="qr-code" />
+            </div>
+        </div>
+    </div>
+    <div class="row comparable-info-wrapper market-compare">
+        <h5 class="section-title">EMSALLER</h5>
+        <div class="col-xs-12">
+            <div id="dvTable"></div>
+            <div class="map-wrapper">
+                <div id="mapComparable"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row land-info-wrapper">
+        <h5 class="section-title">ADA PARSEL BİLGİLERİ</h5>
+        <div class="col-xs-12">
+            <h4></h4>
+            <div class="map-wrapper">
+                <div id="mapLand"></div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div style="page-break-inside: avoid;">
+    <div style="height: 20px;"></div>
+    <div class="row" style="clear:both;">
+        <div class="col-xs-4 text-left">
+            <a class="navbar-brand" href="#"></a>
+        </div>
+        <div class="col-xs-4 text-center" style="padding-top: 20px;">
+            <img onerror="this.style.display='none'" src="https://endeksa-beta-storage.s3.eu-central-1.amazonaws.com/data/6ac9d4d1-5dca-4c8e-9a7c-9556ee9641b0/8a0f2668-de1e-4c74-b3bb-0072b2053a1e_logo.jpeg" height="48" width="auto" style="max-height:48px" />
+        </div>
+        <div class="col-xs-4 text-right">
+            <h1 class="navbar-slogan" style="margin-right: auto !important; margin-left: auto; text-align: right;">
+                ARAZİ ELEKTRONİK DEĞERLEME RAPORU
+            </h1>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-xs-5">
+            <div class="col-xs-3">
+                <img onerror="this.style.display='none'" style="margin-left: 0; border-radius: 50%; border-color: transparent; max-width: 128px; max-height: 120px;min-height:128px;"
+                     src="{{Avatar}}" />
+            </div>
+            <div class="col-xs-9 text-left" style="padding-left: 30px; font-size: 20px;">
+                <p class="user-name" style="font-size: 20px;"><strong>Onur Yanık</strong></p>
+                <p class="user-telephone" style="margin-bottom: 5px;">
+                    <img onerror="this.style.display='none'" src="https://endeksa-beta-storage.s3.eu-central-1.amazonaws.com/htmltemplates/reports/EDR/phone.png"
+                         style="margin-top: -5px;" alt="phone" width="22" height="22"> &nbsp;+905303218044
+                </p>
+                <p>
+                    <img onerror="this.style.display='none'" src="https://endeksa-beta-storage.s3.eu-central-1.amazonaws.com/htmltemplates/reports/EDR/mail.png"
+                         style="margin-top: -5px; margin-right:5px" alt="mail" width="22" height="22">&nbsp;onury@endeksa.com
+                </p>
+            </div>
+        </div>
+        <div class="col-xs-2 text-right">
+            <p style="margin-bottom: 6px; font-size: 20px; text-align: center;">
+                <strong>Personalized Solutions, Exceptional Properties</strong>
+            </p>
+        </div>
+        <div class="col-xs-5" style="padding-right:40px">
+            <div class="col-xs-10 text-right" style="font-size: 15px; padding-right:10px">
+                <p style="margin-bottom: 3px;"></p>
+                <p style="margin-bottom: 2px;" class="report-address">
+                    Beste Sok., 18, Şirintepe Mah., İzmit, Kocaeli
+                </p>
+                <span class="tapuParsel"></span>
+                <p
+                        style="margin-bottom: 2px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; clear: both;">
+                    17.08.2023
+                </p>
+            </div>
+            <div class="col-xs-2 text-left">
+                <img onerror="this.style.display='none'" src="{{qrcode}}" width="82" height="82" alt="qr-code" />
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+        <h5 class="section-title">ARAZİ BİLGİLERİ</h5>
+        <div class="col-xs-12">
+            <table class="table table-condensed">
+                <tbody>
+                <tr>
+                    <td>
+                        Arazi Tipi
+                    </td>
+                    <td>
+                        {{AraziTipi}}
+                    </td>
+                    <td colspan="2">
+                        Alanı (m2)
+                    </td>
+                    <td>
+                        300
+                    </td>
+                    <td colspan="2">
+                        Eğim
+                    </td>
+                    <td>
+                        {{Egim}}
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>Asfalt Yola Uzaklığı (km)</td>
+                    <td>{{AsfaltYolaUzakligi}}</td>
+                    <td colspan="2">Yerleşim Yerine Uzaklığı (km)</td>
+                    <td>{{YerlesimYerineUzakligi}}</td>
+                    <td colspan="2">Su Kaynağına Uzaklığı (km)</td>
+                    <td>{{SuKaynaginaUzakligi}}</td>
+                </tr>
+                <tr>
+                    <td>Ekili Mahsül</td>
+                    <td>{{EkiliMahsul}}</td>
+                    <td colspan="2">Bir Önceki Sezon Ekili Mahsül</td>
+                    <td>{{OncekiMahsul}}</td>
+                    <td colspan="2">İki Sezon Önceki Ekili Mahsül</td>
+                    <td>{{2OncekiMahsul}}</td>
+                </tr>
+                <tr>
+                    <td>
+                        Elektrik
+                    </td>
+                    <td>
+                        ✓
+                    </td>
+                    <td>
+                        Su
+                    </td>
+                    <td>
+                        ✓
+                    </td>
+                    <td>
+                        Yolu Açık
+                    </td>
+                    <td>
+                        ✓
+                    </td>
+                    <td>
+                        Yola Yakın
+                    </td>
+                    <td>
+                        {{OlanakYolaYakin}}
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        Doğalgaz
+                    </td>
+                    <td>
+                        {{OlanakDogalgaz}}
+                    </td>
+                    <td>
+                        Telefon
+                    </td>
+                    <td>
+                        {{OlanakTelefon}}
+                    </td>
+                    <td>
+                        Kanalizasyon
+                    </td>
+                    <td>
+                        {{OlanakKanalizasyon}}
+                    </td>
+                    <td>
+                        Zemin Etüdü
+                    </td>
+                    <td>
+                        {{OlanakZeminEtudu}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+        <h5 class="section-title" style="margin-top: -10px;">DİĞER ÖZELLİKLERİ</h5>
+        <div class="col-xs-12">
+
+            <table class="table table-condensed">
+                <tbody>
+                <tr>
+                    <td colspan="15" class="text-center bold font-size-16">
+                        <strong>Manzara</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        Şehir
+                    </td>
+                    <td colspan="1">
+                        ✓
+                    </td>
+                    <td colspan="2">
+                        Doğa
+                    </td>
+                    <td colspan="1">
+                        -
+                    </td>
+                    <td colspan="2">
+                        Göl
+                    </td>
+                    <td colspan="1">
+                        -
+                    </td>
+                    <td colspan="2">
+                        Deniz
+                    </td>
+                    <td colspan="1">
+                        -
+                    </td>
+                    <td colspan="2">
+                        Boğaz
+                    </td>
+                    <td colspan="1">
+                        -
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="15" class="text-center bold font-size-16">
+                        <strong>Açıklama</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="15">
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel" style="border: none;">
+                <div class="panel-header gradient-bar"
+                     style="height: 40px; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+                    <h5 class="section-title" style="background-color: transparent; padding-top:13px">
+                        TAŞINMAZIN DEĞER/FİYAT ANALİZİ
+                    </h5>
+                </div>
+                <div class="panel-body" style="
+                     border-bottom-left-radius: 20px;
+border-bottom-right-radius: 20px;
+background-image: linear-gradient(white, white), radial-gradient(circle at top left, #50b04f, #fbcb0b, #ea201e);
+background-origin: border-box;
+background-clip: content-box, border-box;
+padding: 2px;">
+                    <div class="row" style="text-align: center;">
+                        <div class="col-xs-4" style="padding: 5px;">
+                            <div class="col-xs-12" style="border: 2px solid #5cb85c; height: 200px;">
+                                <h1 class="bold" style="font-size:34px; font-weight:bold">
+                                    2,750,000 ₺
+                                </h1>
+                                <p style="font-size:14px;">
+                                    Minimum Fiyat
+                                </p>
+                                <p style="font-size: 14px;">
+                                        <span class="btn btn-block btn-success">
+                                            Tahmini Satış Süresi : 0-3 Ay
+                                        </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4" style="padding: 5px;">
+
+                            <div class="col-xs-12" style="border: 2px solid #f0ad4e; height: 200px;">
+
+                                <h1 class="bold" style="font-size:34px; font-weight:bold">
+                                    3,050,000 ₺
+                                </h1>
+                                <p style="font-size:14px">
+                                    Tahmini Piyasa Değeri
+                                </p>
+                                <p style="font-size: 14px;">
+                                        <span class="btn btn-block btn-warning">
+                                            Tahmini Satış Süresi : 3-6 Ay
+                                        </span>
+                                </p>
+                                <p class="bold" style="color: rgb(59, 58, 58); font-size:12px;">
+                                    (Fiyatlandırmaya göre tahmini elden çıkarma süreleri)
+                                </p>
+                                <p style="font-size: 14px;">
+                                        <span class="bold" style="font-weight: bold;">
+                                            Birim Fiyat:
+                                        </span> 9,167 - 11,167 ₺/m<sup>2</sup>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4" style="padding: 5px;">
+                            <div class="col-xs-12" style="border: 2px solid #d9534f; height: 200px;">
+                                <h1 class="bold" style="font-size:34px; font-weight:bold">
+                                    3,350,000 ₺
+                                </h1>
+                                <p style="font-size:14px">
+                                    Maksimum Fiyat
+                                </p>
+                                <p style="font-size: 14px;">
+                                        <span class="btn btn-block btn-danger">
+                                            Tahmini Satış Süresi: 6-12 Ay
+                                        </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-endline text-center" style="font-size: 12px; padding-left:20px; padding-bottom:15px">
+                        <b>
+                            Bu rapor, www.endeksa.com tarafından satış, saha çalışmaları ve internette yer alan verilere dayalı istatistiksel modelleme yöntemleri ile üretilmiştir ve sapmalar içerebilir. Burada yer alan bilgiler ve tahminler, varsayımsal olup herhangi bir taahhüt veya kesinlik içermez. Bu kapsamda buradaki bilgiler ve tahminler, müşteri için sadece tavsiye niteliğinde olup öngörü amaçlıdır; herhangi bir şekilde www.endeksa.com veya müşteriler için hukuki bağlayıcılığı olamaz. Bu bilgi ve tahminlerin bir yatırıma veya ticarete konu edilmesi halinde www.endeksa.com herhangi bir sorumluluk üstlenmez.
+                        </b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="page-break-inside: avoid;"></div>
+
+<script type="text/javascript">
+    initializeMap();
+
+    var firmaLogo = document.getElementsByClassName('firma-logo');
+    if (firmaLogo && firmaLogo[0]) {
+        if (firmaLogo[0].attributes["src"].value.length <= 15) {
+            firmaLogo[1].setAttribute('class', 'hide');
+            firmaLogo[0].setAttribute('class', 'hide');
+        }
+    }
+
+    function initializeMap() {
+
+        var PropertyLat = '40.768285736011876';
+        var PropertyLong = '29.858875659048678';
+
+        var Parcel = '[{}]';
+        Parcel = JSON.parse(Parcel.replace('\r\n', ' '));
+
+        var centerMarker = [Number((+PropertyLat).toFixed(6)), Number((+PropertyLong).toFixed(6))]; // map center
+
+        if (!Parcel[0].type) {
+            var parcelNoData = document.getElementsByClassName('land-info-wrapper')[0];
+            parcelNoData.setAttribute('class', 'hide');
+        } else {
+            buildParcel();
+        }
+
+        var Comparables = '{{Comparables}}';
+        Comparables = JSON.parse(Comparables);
+
+        if (Comparables === null || Comparables.length == 0) {
+            var comparableNoData = document.getElementsByClassName('comparable-info-wrapper')[0];
+            comparableNoData.setAttribute('class', 'hide');
+        } else {
+            buildComparables();
+        }
+
+        function buildComparables() {
+            var comparTables = [];
+            var comparableFilter = JSON.parse(JSON.stringify(Comparables));
+            // filter 8 elements for comparableTable
+            Object.keys(comparableFilter).forEach(function (k, i) {
+                if (i >= 0 && i < 8) {
+                    comparTables.push(comparableFilter[k]);
+                }
+            });
+
+            // build new object
+            for (var i = 0; i < comparTables.length; i++) {
+                comparTables.forEach(function (columnName) {
+                    delete comparTables[i].FloorNumber;
+                    delete comparTables[i].Long;
+                    delete comparTables[i].Lat;
+                    delete comparTables[i].LivingRoom;
+                    delete comparTables[i].Room;
+                    delete comparTables[i].Age;
+                    delete comparTables[i].FloorSegment;
+                    delete comparTables[i].FloorCount;
+                    delete comparTables[i].ExtraArea;
+                    delete comparTables[i].Bahtroom;
+                })
+            }
+
+            // dynamic data
+            var totalColumns = Object.keys(comparTables[0]).length;
+            var columnNames = [];
+            columnNames = Object.keys(comparTables[0]);
+
+            var table = document.createElement("TABLE");
+            var row = table.insertRow(-1);
+            for (var i = 0; i < totalColumns; i++) {
+                var headerCell = document.createElement('TD');
+                headerCell.style.fontWeight = "bold";
+                headerCell.className = "bold";
+                if (columnNames[i] === "Distance") {
+                    headerCell.innerHTML = 'Mesafe (m)';
+                } else if (columnNames[i] === "Time") {
+                    headerCell.innerHTML = 'Zaman (Gün)';
+                } else if (columnNames[i] === 'Type') {
+                    headerCell.innerHTML = 'Tip';
+                } else if (columnNames[i] === 'DistrictName') {
+                    headerCell.innerHTML = 'Mahalle';
+                } else if (columnNames[i] === 'BrutArea') {
+                    headerCell.innerHTML = 'Alanı (m2)';
+                } else if (columnNames[i] === 'PropertyType') {
+                    headerCell.innerHTML = 'Konut Tipi';
+                } else if (columnNames[i] === 'AdjustedPrice') {
+                    headerCell.innerHTML = 'Değeri (TL)'
+                } else if (columnNames[i] === 'PropertyPriceTypeId') {
+                    continue;
+                }
+                row.appendChild(headerCell);
+            }
+
+            var dataCompare = JSON.parse(JSON.stringify(comparTables));
+            for (var i = 0; i < dataCompare.length; i++) {
+                // fix value
+                var numeric = (Math.round(dataCompare[i]['AdjustedPrice'] / 5000) * 5000).toFixed(2).toLocaleString();
+
+                dataCompare[i]['AdjustedPrice'] = numeric;
+                // build data in table
+                row = table.insertRow(-1);
+                columnNames.forEach(function (columnName) {
+                    if (columnName === 'PropertyPriceTypeId') {
+                        return;
+                    }
+                    var cell = row.insertCell(-1);
+                    cell.innerHTML = dataCompare[i][columnName];
+
+
+                })
+            }
+
+            var dvTable = document.getElementById("dvTable");
+            dvTable.innerHTML = "";
+            dvTable.appendChild(table);
+            document.getElementById("dvTable").firstChild.className = "table table-condensed emsaller";
+
+            // map
+            var myMarkers = [];
+
+            // markers
+            var map = L.map('mapComparable', {
+                zoomControl: false,
+                attributionControl: false
+            }).setView(centerMarker, 17);
+
+            map.invalidateSize();
+
+            // map fit bounds
+            for (var i = 0; i < Comparables.length; i++) {
+                var loc = Comparables[i];
+                var markers = L.marker([+loc.Lat, +loc.Long]);
+                myMarkers.push(markers);
+            }
+
+            var group = new L.featureGroup(myMarkers);
+            map.fitBounds(group.getBounds());
+            map.setZoom(map.getZoom() - 1);
+
+            var center = L.marker(centerMarker);
+            myMarkers.push(center);
+
+            var redIcon = new L.Icon({
+                iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            });
+
+            marker = L.marker(centerMarker, {
+                icon: redIcon
+            }).addTo(map);
+
+            // map Layers
+            L.tileLayer('http://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+                attribution: '&copy; Google Maps',
+                subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+            }).addTo(map);
+
+            // circles
+            var path = {};
+            var prices = [];
+            for (key in Comparables) {
+                prices.push(+Comparables[key].AdjustedPrice / +Comparables[key].BrutArea);
+            }
+            var max = prices.reduce(function (a, b) {
+                return Math.max(a, b);
+            });
+
+            var min = prices.reduce(function (a, b) {
+                return Math.min(a, b);
+            });
+
+            // build object
+            for (key in Comparables) {
+                var name = 'circle' + key;
+                var price = +Comparables[key].AdjustedPrice / +Comparables[key].BrutArea;
+                path[name] = {
+                    type: "circle",
+                    radius: 90,
+                    stroke: true,
+                    weight: 1,
+                    clickable: false,
+                    opacity: 0.6,
+                    fillOpacity: 0.5,
+                    color: paintCircles(price, min, max),
+                    latlngs: {
+                        lat: +Comparables[key].Lat,
+                        lng: +Comparables[key].Long
+                    }
+                }
+            }
+
+            function paintCircles(price, min, max) {
+
+                var e = (+max - +min) / 8;
+                return price > max - e ? '#005a32' :
+                    price > max - 2 * e ? '#238443' :
+                        price > max - 3 * e ? '#41ab5d' :
+                            price > max - 4 * e ? '#78c679' :
+                                price > max - 5 * e ? '#addd8e' :
+                                    price > max - 6 * e ? '#d9f0a3' :
+                                        price > max - 7 * e ? '#f7fcb9' : '#ffffe5';
+            }
+
+            // build path/circles in map
+            for (key in path) {
+                var circle = L.circle(path[key].latlngs, {
+                    type: "circle",
+                    radius: 90,
+                    stroke: true,
+                    weight: 1,
+                    clickable: false,
+                    opacity: 0.6,
+                    fillOpacity: 0.5,
+                    color: path[key].color
+                }).addTo(map)
+            }
+
+        }
+
+        //* ----- Land section --------------------------------------------- *//
+        function buildParcel() {
+            // dynamic header
+            var properties = [];
+            for (var key in Parcel) {
+                if (Parcel.hasOwnProperty(key)) {
+                    for (let i = 0; i < Parcel.length; i++) {
+                        properties.push(Parcel[i].properties);
+                    }
+                }
+            }
+
+            var htmlTags = '';
+            var tapuPaftaAdaParsel = '';
+            properties.forEach(function (data) {
+                htmlTags += "<table class='table table-condensed parsel'><tbody>";
+
+                htmlTags += "<tr><td class='bold text-center fw-bold'>Tapu Kaydı</td>";
+                htmlTags += "<td class='bold text-center'>" + data.ilAd + ',&nbsp;' + data.ilceAd + ',&nbsp;' + data.mahalleAd + "</td>";
+                htmlTags += "<td class='bold text-center fw-bold'>Pafta</td>";
+                htmlTags += "<td class='bold text-center'>" + data.pafta + "</td></tr>";
+
+                htmlTags += "<tr><td class='bold text-center fw-bold'>Ada/Parsel</td>";
+                htmlTags += "<td class='bold text-center'>" + data.adaNo + '/' + data.parselNo + "</td>";
+
+
+                tapuPaftaAdaParsel = data.ilAd + ',&nbsp;' + data.ilceAd + ',&nbsp;' + data.mahalleAd + '&nbsp;Mahallesi,&nbsp;' + data.adaNo + '&nbsp;Ada, ' + data.parselNo + '&nbsp;Parsel';
+
+                htmlTags += "<td class='bold text-center fw-bold'>Nitelik</td>";
+                htmlTags += "<td class='bold text-center'>" + data.nitelik + "</td></tr>";
+
+                htmlTags += "<tr><td class='bold text-center fw-bold'>Mevki</td>";
+                htmlTags += "<td class='bold text-center'>" + data.mevkii + "</td>";
+                htmlTags += "<td class='bold text-center fw-bold'>Alan</td>";
+                htmlTags += "<td class='bold text-center'>" + data.alan + "</td></tr>";
+
+                htmlTags += "</tbody></table>";
+            })
+
+            var tapuParselElements = document.getElementsByClassName('tapuParsel');
+            for (let i = 0; i < tapuParselElements.length; i++) {
+                tapuParselElements[i].innerHTML = tapuPaftaAdaParsel;
+            }
+
+
+
+            // insert data
+            var landNode = document.querySelectorAll('.land-info-wrapper h4')[0];
+            landNode.insertAdjacentHTML("afterend", htmlTags);
+
+            // map
+            var tempCenter = [];
+            for (var key in Parcel) {
+                if (Parcel.hasOwnProperty(key)) {
+                    for (let i = 0; i < Parcel.length; i++) {
+                        tempCenter.push(Parcel[i].geometry.coordinates[0][0]);
+                    }
+                }
+            }
+
+            var mapLand = L.map('mapLand', {
+                zoomControl: false,
+                attributionControl: false
+            }).setView(centerMarker, 19); //centerMarker
+
+            // map Layers
+            L.tileLayer('http://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+                attribution: '&copy; Google Maps',
+                // maxZoom: 30,
+                subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+            }).addTo(mapLand);
+
+            // geoJson
+            if (Parcel[0].geometry.coordinates.length == 1 && Parcel[0].geometry.type == "MultiPolygon") {
+                Parcel[0].geometry.type = "Polygon"
+            }
+            L.geoJSON(Parcel[0]).addTo(mapLand);
+
+            // style polygono
+            function areaStyle() {
+                return {
+                    fillColor: '#CCC',
+                    weight: 4,
+                    opacity: 1,
+                    color: '#00aeef',
+                    dashArray: '3',
+                    fillOpacity: 0.5
+                }
+            };
+
+            var geojson = L.geoJson(Parcel[0], {
+                style: areaStyle
+            }).bindTooltip(function (layer) {
+                return layer.feature.properties.adaNo + ' / ' + layer.feature.properties
+                    .parselNo; //merely sets the tooltip text
+            }, {
+                permanent: true,
+                opacity: 1,
+                fillColor: '#ccc'
+            }).addTo(mapLand);
+            mapLand.fitBounds(geojson.getBounds());
+            mapLand.setZoom(mapLand.getZoom() - 10);
+        }
+    }
+</script>
+</body>
+
+</html>
